@@ -1,3 +1,6 @@
+//list selector (should select the section containing all of the tasks)
+const taskList = document.querySelector('#taskList');
+
 //h1 selector
 const listHead = document.querySelector('h1')
 
@@ -9,25 +12,32 @@ const addTaskBtn = document.querySelector('#addTaskBtn');
 const removeTaskBtn = document.querySelector('#removeTaskBtn');
 const sortTaskBtn = document.querySelector('#sortTaskBtn');
 
-//variable to capture the text inputed into the text input. Trying to see if its better to create the var here and call it later, or create it within functions. *disabling. this causes more issues 
-// let textValue = taskInput.value;
+//number of tasks display selector
+const numOfTasksDisplay = document.querySelector('#numOfTasksDisplay')
 
 //empty array, this is the wrapper for my to do list
 const toDoList = [];
 
+//variable that stores the amount of current tasks
+let numOfTasks = 0;
+
 //function that takes the text inside the text input, and add it to the end of the to do list array.
 const addTask = ()=> {
+    if (taskInput.value === '') {
+        taskInput.placeholder = 'Cannot be blank!'
+    } else {
+    numOfTasks++;
     let textValue = taskInput.value;
     toDoList.push(textValue);
+    }
 };
 
-//need to figure out how we are going to create and display the tasks...
-//function that should console.log each item in the array
-const logTasks = ()=>{
-    toDoList.forEach((el) => console.log(el));
-};
-
-
+//function that creates spans with input field info
+const createTask = () => {
+    const newTask = document.createElement('p');
+    newTask.textContent = taskInput.value;
+    taskList.appendChild(newTask);
+}
 
 //function to clear the text input field
 const clearText = ()=> {
@@ -38,12 +48,16 @@ const clearText = ()=> {
 
 //adds the text in the text input to the array
 addTaskBtn.addEventListener('click', addTask);
+
+//executes the createTask function
+addTaskBtn.addEventListener('click', createTask);
+
 //clears text input on task add
 addTaskBtn.addEventListener('click', clearText);
+
 //clears text input on load/refresh
 window.addEventListener('load', clearText);
-//execute console log array function on add btn click
-addTaskBtn.addEventListener('click', logTasks);
+
 
 
 
