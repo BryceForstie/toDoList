@@ -12,8 +12,7 @@ const addTaskBtn = document.querySelector('#addTaskBtn');
 const removeTaskBtn = document.querySelector('#removeTaskBtn');
 const sortTaskBtn = document.querySelector('#sortTaskBtn');
 
-//number of tasks display selector
-const numOfTasksDisplay = document.querySelector('#numOfTasksDisplay')
+const taskNumDisplay = document.querySelector('#taskNumDisplay');
 
 //empty array, this is the wrapper for my to do list
 const toDoList = [];
@@ -27,6 +26,7 @@ const addTask = ()=> {
         taskInput.placeholder = 'Cannot be blank!'
     } else {
     numOfTasks++;
+    taskNumDisplay.textContent = `Number of current tasks: ${numOfTasks}`;
     let textValue = taskInput.value;
     toDoList.push(textValue);
     }
