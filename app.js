@@ -18,45 +18,42 @@ const taskNumDisplay = document.querySelector('#taskNumDisplay');
 // empty array, this is the wrapper for my to do list
 const toDoList = [];
 
-// variable that stores the amount of current tasks
-let numOfTasks = 0;
-
-// function that takes the text inside the text input, and add it to the end of the to do list array.
-// also updates adds 1 to numOfTasks, changes the display text for number of tasks,
+//add an object to array
 const addTask = ()=> {
     // check for blank textbox. loops here until there is something in the textbox
     if (taskInput.value === '') {
         taskInput.placeholder = 'Cannot be blank!'
     // function continues with text
     } else {
-    // adding 1 to numOfTasks for future use
-    numOfTasks++;
-    // Updates # of tasks display
-    taskNumDisplay.textContent = `Number of current tasks: ${numOfTasks}`;
     // add the task to array
-    toDoList.push(taskInput.value);
-    
-    // div that holds everything
-    const newTask = document.createElement('div');
-    newTask.id = `task${numOfTasks}`;
-    
-    // checkbox for task description
-    const taskCheckBox = document.createElement('input');
-    taskCheckBox.type = 'checkbox';
-    taskCheckBox.id = `taskCheckBox${numOfTasks}`;
-
-    // task description
-    const taskDescription = document.createElement('label');
-    taskDescription.htmlFor = `taskCheckBox${numOfTasks}`
-    taskDescription.textContent = taskInput.value;
-
-    // appending checkbox and task description to div, then append div to task list
-    newTask.appendChild(taskCheckBox);
-    newTask.appendChild(taskDescription);
-    taskList.appendChild(newTask);
-    taskInput.placeholder = 'enter a task';
+    const newTask = {
+        taskText : taskInput.value,
+        checked : false,
+    }
+    toDoList.push(newTask);
     taskInput.placeholder = 'enter a task';
     }
+};
+
+const displayTask = ()=> {
+        for (let i = 0; i < toDoList.length+1; i++) {
+            if (taskInput.value === '') {
+                taskInput.placeholder = 'Cannot be blank!'
+            } else if (i === toDoList.length) {
+        const newTaskDisplay = document.createElement('div');
+        newTaskDisplay.id = `display${i}`
+        const displayCheckBox = document.createElement('input');
+        displayCheckBox.type = 'checkbox';
+        displayCheckBox.id = `checkboxTask${i}`
+        const displayText = document.createElement('label');
+        displayText.id = `taskText${i}`
+        displayText.htmlFor = `checkboxTask${i}`; 
+        displayText.textContent = toDoList[i-1].taskText;
+        newTaskDisplay.appendChild(displayCheckBox);
+        newTaskDisplay.appendChild(displayText);
+        taskList.appendChild(newTaskDisplay);
+        };
+    };
 };
 
 // function to clear the text input field
@@ -64,27 +61,15 @@ const clearText = ()=> {
     taskInput.value = '';
 };
 
-// function to delete checked items 
-// need to check if each task is checked, if its checked - delete the task.
-const removeTask = ()=> {
-    for (let i = 0; i < numOfTasks; i++) {
-    if (document.querySelector(`#taskCheckBox${i+1}`).checked) {
-        document.querySelector(`#task${i+1}`).remove();
-        i = 0;
-    }
-}
-}
-
-// function or functions to sort alphabetically 
-
 // adds the text in the text input to the array
 addTaskBtn.addEventListener('click', addTask);
-// clears text input on task add
-addTaskBtn.addEventListener('click', clearText);
 // clears text input on load/refresh
 window.addEventListener('load', clearText);
-// executes remove task function on remove btn click
-removeTaskBtn.addEventListener('click', removeTask);
+// executes display task on add btn click
+addTaskBtn.addEventListener('click', displayTask);
+// clears text input on task add
+addTaskBtn.addEventListener('click', clearText);
+
 
 
 
