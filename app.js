@@ -28,7 +28,6 @@ const addTask = ()=> {
     // add the task to array
     const newTask = {
         taskText : taskInput.value,
-        checked : false,
     }
     toDoList.push(newTask);
     taskInput.placeholder = 'enter a task';
@@ -78,10 +77,7 @@ const removeTask = () => {
 //function to re-write ids so above code works
 const rewriteId = () => {
     for (let i = 0; i<toDoList.length; i++) {
-        newTaskDisplay.id = `taskDiv${i}`;
-        displayCheckBox.id = `checkboxTask${i}`;
-        displayText.id = `taskText${i}`;
-        displayText.htmlFor = `checkboxTask${i}`; 
+        
     }
 }
 
