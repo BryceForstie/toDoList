@@ -1,20 +1,16 @@
 // list selector (should select the section containing all of the tasks)
 const taskList = document.querySelector('#taskList');
-
 // h1 selector
 const listHead = document.querySelector('h1');
-
 // text input selector
 const taskInput = document.querySelector('#taskInput');
-
 // button selectors
 const addTaskBtn = document.querySelector('#addTaskBtn');
+const completeBtn = document.querySelector('#completeBtn');
 const removeTaskBtn = document.querySelector('#removeTaskBtn');
 const sortTaskBtn = document.querySelector('#sortTaskBtn');
-
 // task # display selector
 const taskNumDisplay = document.querySelector('#taskNumDisplay');
-
 // empty array, this is the wrapper for my to do list
 const toDoList = [];
 // another empty array I use this later to store unchecked items
@@ -26,7 +22,7 @@ const allCheckBoxes = document.querySelectorAll('.checkboxTask')
 // stores number of checked checkboxes in a var
 let numOfChecked = 0;
 
-//add an object to array
+// add an object to array
 function addTask() {
     // check for blank textbox. loops here until there is something in the textbox
     if (taskInput.value === '') {
@@ -37,8 +33,8 @@ function addTask() {
         const newTask = taskInput.value;
         toDoList.push(newTask);
         taskInput.placeholder = 'enter a task';
-    }
-}
+    };
+};
 
 //function to store task element creations, and also append them to the todolist section
 function displayTask() {
@@ -46,21 +42,21 @@ function displayTask() {
         if (taskInput.value === '') {
             taskInput.placeholder = 'Cannot be blank!';
         } else if (i === toDoList.length) {
-            //variable that stores div creation
+            // variable that stores div creation
             const newTaskDisplay = document.createElement('div');
             newTaskDisplay.classList.add('taskDiv');
             newTaskDisplay.id = `taskDiv${i}`;
-            //variable that store checkbox creation
+            // variable that store checkbox creation
             const displayCheckBox = document.createElement('input');
             displayCheckBox.classList.add('checkboxTask');
             displayCheckBox.type = 'checkbox';
             displayCheckBox.id = `checkboxTask${i}`;
-            //variabe that stores label creation
+            // variabe that stores label creation
             const displayText = document.createElement('label');
             displayText.id = `taskText${i}`;
             displayText.htmlFor = `checkboxTask${i}`;
             displayText.textContent = toDoList[i - 1];
-            //actually adding the classes now
+            // actually adding the classes now
             newTaskDisplay.appendChild(displayCheckBox);
             newTaskDisplay.appendChild(displayText);
             taskList.appendChild(newTaskDisplay);
@@ -82,7 +78,7 @@ function countChecked() {
     };
 };
 
-//function to clear numOfChecked 
+// function to clear numOfChecked 
 function wipeNumOfChecked() {
     numOfChecked = 0;
 };
@@ -177,6 +173,25 @@ function updatePlaceHolder() {
     };
 };
 
+// function that applys a complete class to elements that are checked
+function markComplete() {
+    for (let i = 0; i<toDoList.length; i++) {
+        if (document.querySelector(`#checkboxTask${i+1}`).checked) {
+            document.querySelector(`#taskDiv${i+1}`).classList.add('completeTask')
+        };
+    };
+};
+
+// function to uncheck all
+function uncheckAll() {
+    for (let i = 0; i<toDoList.length; i++) {
+        document.querySelector(`#checkboxTask${i+1}`).checked = false;
+    };
+};
+
+// tryna make add work on enter click as well
+
+
 // adds the text in the text input to the array
 addTaskBtn.addEventListener('click', addTask);
 // clears text input on load/refresh
@@ -185,6 +200,9 @@ window.addEventListener('load', clearText);
 addTaskBtn.addEventListener('click', displayTask);
 // clears text input on task add
 addTaskBtn.addEventListener('click', clearText);
+
+
+
 // counts # of checked items when remove button is clicked 
 removeTaskBtn.addEventListener('click', countChecked);
 // add the unchecked items of the toDoList to a new array
@@ -203,6 +221,10 @@ removeTaskBtn.addEventListener('click', updatedDisplayTask);
 removeTaskBtn.addEventListener('click', updatePlaceHolder);
 // changes numOfChecked back to 0 after everything else that happens on remove btn click
 removeTaskBtn.addEventListener('click', wipeNumOfChecked);
+
+
+// adds complete class to labels that have a checked checkbox on complete btn click
+completeBtn.addEventListener('click', markComplete);
 
 
 

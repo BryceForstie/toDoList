@@ -1,0 +1,29 @@
+body {
+    width: 80%;
+    height: 500px;
+    margin: 0 auto;
+}
+
+#container {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.completeTask {
+    background-color: rgba(34, 139, 34, 0.479);
+}
+
+.taskDiv {
+    border: 1px solid rgba(128, 128, 128, 0.082);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+#buttons {
+    margin-top: auto;
+}
