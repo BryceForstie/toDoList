@@ -18,9 +18,13 @@ const updatedToDoList = [];
 // variable that selects all divs 
 const allTaskDisplays = document.querySelectorAll('div');
 // variable that selects all checkboxes
-const allCheckBoxes = document.querySelectorAll('.checkboxTask')
+const allCheckBoxes = document.querySelectorAll('.checkboxTask');
 // stores number of checked checkboxes in a var
 let numOfChecked = 0;
+// array the contains the alphabet. going to use for sorting 
+const alphabetLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+// blank sorted array var
+const sortedArray = [];
 
 // add an object to array
 function addTask() {
@@ -86,10 +90,7 @@ function wipeNumOfChecked() {
 // creates a new array with the values of tasks that are not checked
 function createUpdatedArray() {
     for (let i = 0; i<toDoList.length; i++) {
-        // I dont want this to run if nothing is checked
-        if (numOfChecked === 0) {
-            taskInput.placeholder = 'No Checked Items';
-        } else if (document.querySelector(`#checkboxTask${i+1}`).checked === false) {
+        if (document.querySelector(`#checkboxTask${i+1}`).checked === false) {
             updatedToDoList.push(toDoList[i]);
         };
     };
@@ -97,52 +98,30 @@ function createUpdatedArray() {
 
 // removes everything from the toDoList array
 function wipeToDoList() {
-     // I dont want this to run if nothing is checked
-     if (numOfChecked === 0) {
-        taskInput.placeholder = 'No Checked Items';
-    } else {
     toDoList.length = 0;
-    }
 };
+
 
 // updates toDoList array with values in the new array I created with unchecked values
 function updateToDoList() {
-     // I dont want this to run if nothing is checked
-     if (numOfChecked === 0) {
-        taskInput.placeholder = 'No Checked Items';
-    } else {
     for (let i = 0; i<updatedToDoList.length; i++) {
         toDoList.push(updatedToDoList[i])
-        };
     };
 };
 
+
 // removes everything from the updatedToDoList
 function wipeUpdatedToDoList() {
-     // I dont want this to run if nothing is checked
-     if (numOfChecked === 0) {
-        taskInput.placeholder = 'No Checked Items';
-    } else {
     updatedToDoList.length = 0;
-    };
 };
 
 // removes all divs on page
 function removeTaskDisplays() {
-     // I dont want this to run if nothing is checked
-     if (numOfChecked === 0) {
-        taskInput.placeholder = 'No Checked Items';
-    } else {
     taskList.innerHTML = '';
-    };
 };
 
 // adds new task displays with the updated toDoList
 function updatedDisplayTask() {
-     // I dont want this to run if nothing is checked
-     if (numOfChecked === 0) {
-        taskInput.placeholder = 'No Checked Items';
-    } else {
     for (let i = 0; i < toDoList.length; i++) {
             //variable that stores div creation
             const newTaskDisplay = document.createElement('div');
@@ -163,7 +142,6 @@ function updatedDisplayTask() {
             newTaskDisplay.appendChild(displayText);
             taskList.appendChild(newTaskDisplay);
         };
-    };
 };
 
 // updates the placeholder back to default
@@ -189,8 +167,28 @@ function uncheckAll() {
     };
 };
 
-// tryna make add work on enter click as well
+// function to sort array alphabetically 
+function createSortedArray() {
+    for (let i = 0; i<alphabetLetters.length; i++) {
+        for (let n = 0; n<toDoList.length; n++) {
+           if (toDoList[n][0].toLowerCase() === alphabetLetters[i]) {
+                sortedArray.push(toDoList[n]);
+           };
+        };
+    };
+};
 
+// function to push sorted array to toDoList
+function sortUpdateToDoList() {
+    for (let i = 0; i<sortedArray.length; i++) {
+        toDoList.push(sortedArray[i]);
+    };
+};
+
+// function to wipe sortedArray
+function wipeSortedArray() {
+    sortedArray.length = 0;
+};
 
 // adds the text in the text input to the array
 addTaskBtn.addEventListener('click', addTask);
@@ -201,22 +199,50 @@ addTaskBtn.addEventListener('click', displayTask);
 // clears text input on task add
 addTaskBtn.addEventListener('click', clearText);
 
-
-
 // counts # of checked items when remove button is clicked 
 removeTaskBtn.addEventListener('click', countChecked);
 // add the unchecked items of the toDoList to a new array
-removeTaskBtn.addEventListener('click', createUpdatedArray);
-// wipes toDoList after creating the second updated array 
-removeTaskBtn.addEventListener('click', wipeToDoList);
-// pushes items of second updated array to toDoList
-removeTaskBtn.addEventListener('click', updateToDoList);
-// wipes updated toDoList so we can update it again as needed 
-removeTaskBtn.addEventListener('click', wipeUpdatedToDoList);
-// removes all task displays on remove button click
-removeTaskBtn.addEventListener('click', removeTaskDisplays);
-// adds new task displays with current array info 
-removeTaskBtn.addEventListener('click', updatedDisplayTask);
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    createUpdatedArray();
+    };
+});
+// wipes toDoList after creating the second updated array  wipeToDoList
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    wipeToDoList();
+    };
+});
+// pushes items of second updated array to toDoList updateToDoList
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    updateToDoList();
+    };
+});
+// wipes updated toDoList so we can update it again as needed wipeUpdatedToDoList
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    wipeUpdatedToDoList();
+    };
+});
+// removes all task displays on remove button click removeTaskDisplays
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    removeTaskDisplays();
+    };
+});
+// adds new task displays with current array info updatedDisplayTask
+removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
+    taskInput.placeholder = 'No Checked Items';
+} else { 
+    updatedDisplayTask();
+    };
+});
 // updates placeholder back to default after removing items (only happens if items are removed)
 removeTaskBtn.addEventListener('click', updatePlaceHolder);
 // changes numOfChecked back to 0 after everything else that happens on remove btn click
@@ -225,6 +251,21 @@ removeTaskBtn.addEventListener('click', wipeNumOfChecked);
 
 // adds complete class to labels that have a checked checkbox on complete btn click
 completeBtn.addEventListener('click', markComplete);
+
+// creates a new alphabetically sorted array
+sortTaskBtn.addEventListener('click', createSortedArray);
+// wipes toDoList
+sortTaskBtn.addEventListener('click', wipeToDoList);
+// pushes sorted array to toDoList
+sortTaskBtn.addEventListener('click', sortUpdateToDoList);
+// wipes sortedArray 
+sortTaskBtn.addEventListener('click', wipeSortedArray);
+// removes all task displays
+sortTaskBtn.addEventListener('click', removeTaskDisplays);
+// add all new task displays with current toDoList info 
+sortTaskBtn.addEventListener('click', updatedDisplayTask);
+
+
 
 
 
