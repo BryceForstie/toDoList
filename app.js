@@ -1,3 +1,12 @@
+//need to fix
+//if task starts with a #, it will be removed on sort. most tasks shouldnt start with a #, but thats up to user so I need to fix
+//this happens becauase my function to sort only checks for letters, and pushes those items. does nothing with #s
+
+//want to add: 
+//uncheck all items on escape key click
+//placeholder update when no items are checked when clicking mark as complete
+//buttons that appear on the div when checked (remove, mark as complete, mark as incomplete)
+
 // list selector (should select the section containing all of the tasks)
 const taskList = document.querySelector('#taskList');
 // h1 selector
@@ -167,7 +176,7 @@ function uncheckAll() {
     };
 };
 
-// function to sort array alphabetically 
+// function to create a new array that is alphabetically sorted
 function createSortedArray() {
     for (let i = 0; i<alphabetLetters.length; i++) {
         for (let n = 0; n<toDoList.length; n++) {
