@@ -31,29 +31,47 @@ const allCheckBoxes = document.querySelectorAll('.checkboxTask');
 // stores number of checked checkboxes in a var
 let numOfChecked = 0;
 // array the contains the alphabet. going to use for sorting 
-const alphabetLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+const alphabetLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 // blank sorted array var
 const sortedArray = [];
 
 // add an object to array
 function addTask() {
+    // IMPORTANT - no looping happens, remind me to discuss this with you.
+    // Functions run synchronously, once. Unless they are async.
+    // The only way you end up with a loop is something like a for loop, while loop, or recursion (a concept I can explain)
+
     // check for blank textbox. loops here until there is something in the textbox
     if (taskInput.value === '') {
-        taskInput.placeholder = 'Cannot be blank!';
+        // Placeholder is meant to be an example, not meant to convey messaging.
+        // taskInput.placeholder = 'Cannot be blank!';
         // function continues with text
     } else {
         // add the task to array with the text typed in the input 
         const newTask = taskInput.value;
         toDoList.push(newTask);
-        taskInput.placeholder = 'enter a task';
+        // taskInput.placeholder = 'enter a task';
     };
 };
+
+// I made some basic comments throughout. I saw that you came up with some unique strategies to sort, and that's a good thing! Better to think than just copy.
+// However, I won't bother commenting on most of the logic because we will just have to walk through it together so you can explain your thought process.
+// Big picture, it should look something like this:
+// const tasks = [
+//         'Whatever the user types',
+//         'Another task'
+// ]
+// To add an item you can use tasks.push
+// To remove an item you can use tasks.splice or tasks.slice
+// To sort you can run tasks.sort((a, b) => a - b);
+// I am genuinely happy that you did it the way you did though. Way more learning.
+// Don't bother fixing yet, I want to talk this through with you and also you can do some other stuff along with the fixes
 
 //function to store task element creations, and also append them to the todolist section
 function displayTask() {
     for (let i = 0; i < toDoList.length + 1; i++) {
         if (taskInput.value === '') {
-            taskInput.placeholder = 'Cannot be blank!';
+            // taskInput.placeholder = 'Cannot be blank!';
         } else if (i === toDoList.length) {
             // variable that stores div creation
             const newTaskDisplay = document.createElement('div');
@@ -78,14 +96,14 @@ function displayTask() {
 }
 
 // function to clear the text input field
-const clearText = ()=> {
+const clearText = () => {
     taskInput.value = '';
 };
 
 // function to count num of checked items
 function countChecked() {
-    for (let i = 0; i<toDoList.length; i++) {
-        if (document.querySelector(`#checkboxTask${i+1}`).checked) {
+    for (let i = 0; i < toDoList.length; i++) {
+        if (document.querySelector(`#checkboxTask${i + 1}`).checked) {
             numOfChecked++;
         };
     };
@@ -98,8 +116,8 @@ function wipeNumOfChecked() {
 
 // creates a new array with the values of tasks that are not checked
 function createUpdatedArray() {
-    for (let i = 0; i<toDoList.length; i++) {
-        if (document.querySelector(`#checkboxTask${i+1}`).checked === false) {
+    for (let i = 0; i < toDoList.length; i++) {
+        if (document.querySelector(`#checkboxTask${i + 1}`).checked === false) {
             updatedToDoList.push(toDoList[i]);
         };
     };
@@ -113,7 +131,7 @@ function wipeToDoList() {
 
 // updates toDoList array with values in the new array I created with unchecked values
 function updateToDoList() {
-    for (let i = 0; i<updatedToDoList.length; i++) {
+    for (let i = 0; i < updatedToDoList.length; i++) {
         toDoList.push(updatedToDoList[i])
     };
 };
@@ -132,64 +150,66 @@ function removeTaskDisplays() {
 // adds new task displays with the updated toDoList
 function updatedDisplayTask() {
     for (let i = 0; i < toDoList.length; i++) {
-            //variable that stores div creation
-            const newTaskDisplay = document.createElement('div');
-            newTaskDisplay.classList.add('taskDiv');
-            newTaskDisplay.id = `taskDiv${i+1}`;
-            //variable that store checkbox creation
-            const displayCheckBox = document.createElement('input');
-            displayCheckBox.classList.add('checkboxTask');
-            displayCheckBox.type = 'checkbox';
-            displayCheckBox.id = `checkboxTask${i+1}`;
-            //variabe that stores label creation
-            const displayText = document.createElement('label');
-            displayText.id = `taskText${i+1}`;
-            displayText.htmlFor = `checkboxTask${i+1}`;
-            displayText.textContent = toDoList[i];
-            //actually adding the classes now
-            newTaskDisplay.appendChild(displayCheckBox);
-            newTaskDisplay.appendChild(displayText);
-            taskList.appendChild(newTaskDisplay);
-        };
+        //variable that stores div creation
+        const newTaskDisplay = document.createElement('div');
+        newTaskDisplay.classList.add('taskDiv');
+        newTaskDisplay.id = `taskDiv${i + 1}`;
+        //variable that store checkbox creation
+        const displayCheckBox = document.createElement('input');
+        displayCheckBox.classList.add('checkboxTask');
+        displayCheckBox.type = 'checkbox';
+        displayCheckBox.id = `checkboxTask${i + 1}`;
+        //variabe that stores label creation
+        const displayText = document.createElement('label');
+        displayText.id = `taskText${i + 1}`;
+        displayText.htmlFor = `checkboxTask${i + 1}`;
+        displayText.textContent = toDoList[i];
+        //actually adding the classes now
+        newTaskDisplay.appendChild(displayCheckBox);
+        newTaskDisplay.appendChild(displayText);
+        taskList.appendChild(newTaskDisplay);
+    };
 };
 
 // updates the placeholder back to default
-function updatePlaceHolder() {
-    if(numOfChecked>0) {
-    taskInput.placeholder = 'enter a task';
-    };
-};
+// function updatePlaceHolder() {
+//     if (numOfChecked > 0) {
+//         taskInput.placeholder = 'enter a task';
+//     };
+// };
 
 // function that applys a complete class to elements that are checked
-function markComplete() {
-    for (let i = 0; i<toDoList.length; i++) {
-        if (document.querySelector(`#checkboxTask${i+1}`).checked) {
-            document.querySelector(`#taskDiv${i+1}`).classList.add('completeTask')
+function markTaskComplete() {
+    for (let i = 0; i < toDoList.length; i++) {
+        if (document.querySelector(`#checkboxTask${i + 1}`).checked) {
+            document.querySelector(`#taskDiv${i + 1}`).classList.add('completeTask')
         };
     };
 };
 
+// This is never called
 // function to uncheck all
 function uncheckAll() {
-    for (let i = 0; i<toDoList.length; i++) {
-        document.querySelector(`#checkboxTask${i+1}`).checked = false;
+    for (let i = 0; i < toDoList.length; i++) {
+        document.querySelector(`#checkboxTask${i + 1}`).checked = false;
     };
 };
 
 // function to create a new array that is alphabetically sorted
 function createSortedArray() {
-    for (let i = 0; i<alphabetLetters.length; i++) {
-        for (let n = 0; n<toDoList.length; n++) {
-           if (toDoList[n][0].toLowerCase() === alphabetLetters[i]) {
+    for (let i = 0; i < alphabetLetters.length; i++) {
+        for (let n = 0; n < toDoList.length; n++) {
+            // A for loop inside a for loop is almost always a red flag in computer science. Remind me to explain compute complexity to you.
+            if (toDoList[n][0].toLowerCase() === alphabetLetters[i]) {
                 sortedArray.push(toDoList[n]);
-           };
+            };
         };
     };
 };
 
 // function to push sorted array to toDoList
 function sortUpdateToDoList() {
-    for (let i = 0; i<sortedArray.length; i++) {
+    for (let i = 0; i < sortedArray.length; i++) {
         toDoList.push(sortedArray[i]);
     };
 };
@@ -199,83 +219,55 @@ function wipeSortedArray() {
     sortedArray.length = 0;
 };
 
-// adds the text in the text input to the array
-addTaskBtn.addEventListener('click', addTask);
-// clears text input on load/refresh
-window.addEventListener('load', clearText);
-// executes display task on add btn click                          
-addTaskBtn.addEventListener('click', displayTask);
-// clears text input on task add
-addTaskBtn.addEventListener('click', clearText);
+// or setEventListeners
+const onLoad = () => {
+    // ========
+    // You shouldn't put multiple of the same event listeners for the same item.
+    // Instead, make a single function out of them
+    // If you had different event listeners it would make sense, like: click, mouseover, onmousedown. But one function per listener.
+    // ========
 
-// counts # of checked items when remove button is clicked 
-removeTaskBtn.addEventListener('click', countChecked);
-// add the unchecked items of the toDoList to a new array
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    createUpdatedArray();
-    };
-});
-// wipes toDoList after creating the second updated array  wipeToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    wipeToDoList();
-    };
-});
-// pushes items of second updated array to toDoList updateToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    updateToDoList();
-    };
-});
-// wipes updated toDoList so we can update it again as needed wipeUpdatedToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    wipeUpdatedToDoList();
-    };
-});
-// removes all task displays on remove button click removeTaskDisplays
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    removeTaskDisplays();
-    };
-});
-// adds new task displays with current array info updatedDisplayTask
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
-    updatedDisplayTask();
-    };
-});
-// updates placeholder back to default after removing items (only happens if items are removed)
-removeTaskBtn.addEventListener('click', updatePlaceHolder);
-// changes numOfChecked back to 0 after everything else that happens on remove btn click
-removeTaskBtn.addEventListener('click', wipeNumOfChecked);
+    // adds the text in the text input to the array
+    addTaskBtn.addEventListener('click', () => {
+        addTask();
+        displayTask();
+        clearText();
+    });
 
+    // clears text input on load/refresh
+    window.addEventListener('load', clearText);
 
-// adds complete class to labels that have a checked checkbox on complete btn click
-completeBtn.addEventListener('click', markComplete);
+    removeTaskBtn.addEventListener('click', () => {
+        countChecked();
+        // updatePlaceHolder();
+        wipeNumOfChecked();
+        if (numOfChecked === 0) {
+            // I wouldn't bother changing the placeholder. A better practice would be to have a piece of warning text appear/disappear
+        } else {
+            createUpdatedArray();
+            wipeToDoList();
+            updateToDoList();
+            wipeUpdatedToDoList();
+            removeTaskDisplays();
+            updatedDisplayTask();
+        };
+    });
 
-// creates a new alphabetically sorted array
-sortTaskBtn.addEventListener('click', createSortedArray);
-// wipes toDoList
-sortTaskBtn.addEventListener('click', wipeToDoList);
-// pushes sorted array to toDoList
-sortTaskBtn.addEventListener('click', sortUpdateToDoList);
-// wipes sortedArray 
-sortTaskBtn.addEventListener('click', wipeSortedArray);
-// removes all task displays
-sortTaskBtn.addEventListener('click', removeTaskDisplays);
-// add all new task displays with current toDoList info 
-sortTaskBtn.addEventListener('click', updatedDisplayTask);
+    // adds complete class to labels that have a checked checkbox on complete btn click
+    completeBtn.addEventListener('click', markTaskComplete);
 
+    // creates a new alphabetically sorted array
+    sortTaskBtn.addEventListener('click', () => {
+        createSortedArray();
+        wipeToDoList();
+        sortUpdateToDoList();
+        wipeSortedArray();
+        removeTaskDisplays();
+        updatedDisplayTask();
+    });
+}
 
-
+onLoad();
 
 
 
