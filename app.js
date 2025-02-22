@@ -215,65 +215,28 @@ removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
     taskInput.placeholder = 'No Checked Items';
 } else { 
     createUpdatedArray();
-    };
-});
-// wipes toDoList after creating the second updated array  wipeToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
     wipeToDoList();
-    };
-});
-// pushes items of second updated array to toDoList updateToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
     updateToDoList();
-    };
-});
-// wipes updated toDoList so we can update it again as needed wipeUpdatedToDoList
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
     wipeUpdatedToDoList();
-    };
-});
-// removes all task displays on remove button click removeTaskDisplays
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
     removeTaskDisplays();
-    };
-});
-// adds new task displays with current array info updatedDisplayTask
-removeTaskBtn.addEventListener('click', () => { if (numOfChecked === 0) {
-    taskInput.placeholder = 'No Checked Items';
-} else { 
     updatedDisplayTask();
+    updatePlaceHolder();
+    wipeNumOfChecked();
     };
 });
-// updates placeholder back to default after removing items (only happens if items are removed)
-removeTaskBtn.addEventListener('click', updatePlaceHolder);
-// changes numOfChecked back to 0 after everything else that happens on remove btn click
-removeTaskBtn.addEventListener('click', wipeNumOfChecked);
-
 
 // adds complete class to labels that have a checked checkbox on complete btn click
 completeBtn.addEventListener('click', markComplete);
 
 // creates a new alphabetically sorted array
-sortTaskBtn.addEventListener('click', createSortedArray);
-// wipes toDoList
-sortTaskBtn.addEventListener('click', wipeToDoList);
-// pushes sorted array to toDoList
-sortTaskBtn.addEventListener('click', sortUpdateToDoList);
-// wipes sortedArray 
-sortTaskBtn.addEventListener('click', wipeSortedArray);
-// removes all task displays
-sortTaskBtn.addEventListener('click', removeTaskDisplays);
-// add all new task displays with current toDoList info 
-sortTaskBtn.addEventListener('click', updatedDisplayTask);
-
+sortTaskBtn.addEventListener('click', () => {
+    createSortedArray();
+    wipeToDoList();
+    sortUpdateToDoList();
+    wipeSortedArray();
+    removeTaskDisplays();
+    updatedDisplayTask();
+});
 
 
 
